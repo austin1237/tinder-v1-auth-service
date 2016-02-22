@@ -1,5 +1,5 @@
 # tinder-v1-auth-service
-![](https://media.giphy.com/media/9yeStKuX0qhmo/giphy.gif)
+![](https://media.giphy.com/media/9yeStKuX0qhmo/giphy.gif)<br>
 A web service that returns a tinder access token when provided with facebook credentials.
 
 # Getting Started
