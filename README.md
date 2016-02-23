@@ -4,12 +4,18 @@ A web service that returns a tinder access token when provided with facebook cre
 
 # Getting Started
 ## Installation
-On OSX do the following commands<br>
-brew install phantomjs<br>
-brew install casperjs
-## Init
+Use npm to install the following dependencies<br>
+npm install -g phantomjs<br>
+npm install -g casperjs
+
+## How to get started
 to run the server just type
 casperjs tinder-auth-api
+
+send a post request to the port set on the service with the body
+{email: 'your email', password: 'your password'}
+
+and the service should respond with accessToken
 
 ## Contributions
 Feel free to contribute!
@@ -19,3 +25,7 @@ Create your feature branch (git checkout -b my-new-feature)<br>
 Commit your changes (git commit -am 'Add/Fix something')<br>
 Push to the branch (git push origin my-sweet-new-feature)<br>
 Create a new Pull Request
+
+## Props
+Credit to https://github.com/jvenezia/tinderbot for providing the facebook link
+the webscaper uses to get the authToken.
