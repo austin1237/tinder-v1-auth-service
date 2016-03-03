@@ -11,7 +11,7 @@ describe('Testing tinderAuth', function() {
       request('http://localhost:4000')
       .post('/')
       .expect(400, done);
-    },1000);
+    },2000);
   });
 
 });
