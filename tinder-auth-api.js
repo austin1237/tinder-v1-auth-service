@@ -1,18 +1,37 @@
 var casper = require('casper').create();
 //includes web server modules
 var server = require('webserver').create();
-var port = 3000;
+var port = 4000;
 var tinderAuthUrl = "https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token";
 
 //start web server
 server.listen(port, function(request, response) {
-  var params = JSON.parse(request.post);
+  console.log('response sent');
+  var params = null;
+  try{
+    params = JSON.parse(request.post);
+  } catch (e){
+    response.statusCode = 400;
+    response.write('invalid json', null, null);
+    response.close();
+  }
+
   var email = params.email;
   var password = params.password;
   var authUrl;
-
   console.log('email is', email);
-  console.log('password is', password);
+  if (!email){
+    response.statusCode = 400;
+    response.write('No email provided', null, null);
+    response.close();
+  }
+
+  if(!password){
+    response.statusCode = 400;
+    response.write('No password provided', null, null);
+    response.close();
+  }
+
   // Opens facebook
   casper.start('https://facebook.com', function() {
       this.echo(this.getTitle());
@@ -46,4 +65,4 @@ server.listen(port, function(request, response) {
     response.close();
   });
 });
-console.log('Capser server listening on port', port);
+console.log('Casper running at http://localhost:' + port+'/');
