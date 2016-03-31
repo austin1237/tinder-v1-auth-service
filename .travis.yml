@@ -4,4 +4,6 @@ node_js:
 before_script:
   - npm install -g phantomjs
   - npm install -g casperjs
+  - travis --version
+  - casperjs --version
   - npm install -g mocha
