@@ -13,6 +13,7 @@
     "supertest": "*"
   },
   "scripts": {
-    "test": "ps -ef | grep tinder-auth-api | grep -v grep | awk '{print $2}' | xargs kill -9 && casperjs tinder-auth-api.js& mocha test"
+    "test": "casperjs tinder-auth-api.js& sleep 2 && mocha test",
+    "stop" : "ps -ef | grep tinder-auth-api | grep -v grep | awk '{print $2}' | xargs kill -9"
   }
 }
