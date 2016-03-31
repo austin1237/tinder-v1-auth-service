@@ -1,0 +1,19 @@
+
+{
+  "name": "tinderAuth",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/austin1237/tinder-v1-auth-service"
+  },
+  "description": "A webservice that will get a tinderAuth token with facebook creds",
+  "author": "https://twitter.com/austin_p_davis",
+  "version": "1.0.0",
+  "devDependencies": {
+    "mocha": "*",
+    "supertest": "*"
+  },
+  "scripts": {
+    "test": "casperjs tinder-auth-api.js& sleep 2 && mocha test",
+    "stop" : "ps -ef | grep tinder-auth-api | grep -v grep | awk '{print $2}' | xargs kill -9"
+  }
+}
