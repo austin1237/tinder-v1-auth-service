@@ -1,5 +1,6 @@
 # tinder-v1-auth-service
 ![](https://media.giphy.com/media/9yeStKuX0qhmo/giphy.gif)<br>
+[![Build Status](https://travis-ci.org/austin1237/tinder-v1-auth-service.svg?branch=master)](https://travis-ci.org/austin1237/tinder-v1-auth-service)<br>
 A web service that returns a tinder access token when provided with facebook credentials.
 
 # Getting Started
