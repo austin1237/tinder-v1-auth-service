@@ -1,68 +1,36 @@
-var casper = require('casper').create();
-//includes web server modules
-var server = require('webserver').create();
-var port = 4000;
-var tinderAuthUrl = "https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token";
+var bodyParser = require('body-parser');
+var Auth = require('./AuthController');
+var ErrorHandler = ('./ErrorHandler');
+var express = require('express');
+var path = require('path');
+global.appRoot = path.resolve(__dirname);
+argv = require('minimist')(process.argv.slice(2));
+version = 'v1';
+baseurl = '/' + version + '/auth';
+port = argv.port;
 
-//start web server
-server.listen(port, function(request, response) {
-  console.log('response sent');
-  var params = null;
-  try{
-    params = JSON.parse(request.post);
-  } catch (e){
-    response.statusCode = 400;
-    response.write('invalid json', null, null);
-    response.close();
-  }
 
-  var email = params.email;
-  var password = params.password;
-  var authUrl;
-  console.log('email is', email);
-  if (!email){
-    response.statusCode = 400;
-    response.write('No email provided', null, null);
-    response.close();
-  }
+if (!port){
+  console.log('--port arg is required');
+  process.exit();
+}
 
-  if(!password){
-    response.statusCode = 400;
-    response.write('No password provided', null, null);
-    response.close();
-  }
+app = express();
 
-  // Opens facebook
-  casper.start('https://facebook.com', function() {
-      this.echo(this.getTitle());
-  });
+// middleware
+app.use(bodyParser.json());
 
-  //Logs in
-  casper.then(function(){
-    // Weird you pass the params to the bottom of the evaluate
-      this.evaluate(function(email, password){
-        document.getElementById("email").value=email;
-    		document.getElementById("pass").value=password;
-    		document.getElementById("loginbutton").children[0].click();
-      }, email , password);
-  });
 
-  //Redirect to the homepage finished
-  casper.then(function(){
-    this.echo(this.getTitle());
-  });
+// routes
+app.get(baseurl + '/tinder', Auth.tinder);
+app.listen(port);
 
-  //get the auth token from facebook for tinder.
-  casper.thenOpen(tinderAuthUrl).then(function(){
-    authUrl = this.getCurrentUrl();
-    this.echo(authUrl);
-  });
-
-  casper.run(function(){
-    response.statusCode = 200;
-    //sends results as JSON object
-    response.write(JSON.stringify(authUrl), null, null);
-    response.close();
-  });
+// error handler
+app.use(function(err, req, res, next) {
+  defaultStatus = 500;
+  defaultMsg = 'An unkown error has occured';
+  res.status(err.status || defaultStatus).send(err.name || defaultMsg);
 });
-console.log('Casper running at http://localhost:' + port+'/');
+
+
+console.log('service listening on port ' + port);
