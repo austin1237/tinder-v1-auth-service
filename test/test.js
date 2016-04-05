@@ -1,17 +1,47 @@
 var request = require('supertest');
-
+baseUrl = 'http://localhost:3000/v1/auth';
 describe('Testing tinderAuth', function() {
-  before(function(){
-    // this.timeout(2000);
+
+  it('empty post', function(done){
+      request(baseUrl)
+      .get('/tinder')
+      .expect(400, done);
+  });
+  //
+  it('no email', function(done){
+    testUser = {
+      password: 'fakePassword'
+    };
+
+      request(baseUrl )
+      .get('/tinder')
+      .send(testUser)
+      .expect(400, done);
   });
 
-  it('simple testcase', function(done){
-    this.timeout(8000);
-    // setTimeout(function(){
-      request('http://localhost:4000')
-      .post('/')
+  it('no password', function(done){
+    testUser = {
+      email: 'fakeEmail@email.com'
+    };
+
+      request(baseUrl)
+      .get('/tinder')
+      .send(testUser)
       .expect(400, done);
-    // },2000);
+  });
+
+
+  it('invalid facebook login', function(done){
+    this.timeout(8000);
+    testUser = {
+      email: 'fakeUser@fakeUser.com',
+      password: 'fakePassword.com'
+    };
+
+    request(baseUrl)
+    .get('/tinder')
+    .send(testUser)
+    .expect(200, done);
   });
 
 });
