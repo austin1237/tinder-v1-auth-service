@@ -5,18 +5,16 @@ A web service that returns a tinder access token when provided with facebook cre
 
 # Getting Started
 ## Installation
-Use npm to install the following dependencies<br>
+These commands should install the needed dependencies to get started <br>
 npm install -g phantomjs<br>
-npm install -g casperjs
+npm install -g casperjs<br>
+npm install
 
 ## How to get started
-to run the server just type
-casperjs tinder-auth-api
+to run the service just type
+node tinder-auth-api --port="port number" 3000 is the default
 
-send a post request to the port set on the service with the body
-{email: 'your email', password: 'your password'}
 
-and the service should respond with accessToken
 
 ## Contributions
 Feel free to contribute!
