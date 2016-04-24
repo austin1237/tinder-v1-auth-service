@@ -50,7 +50,7 @@ getfaceBookId = (function(req, res, next){
   email = req.body.email;
   password = req.body.password;
   command = 'casperjs ' + global.appRoot;
-  command += '/casperScripts/getFaceBookId.js ';
+  command += '/casperScripts/getFacebookId.js ';
   command += '--email=' + email + ' ';
   command +='--password=' + password + ' ';
   child = exec(command, function (error, stdout, stderr){
