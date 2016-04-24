@@ -6,7 +6,7 @@ var path = require('path');
 global.appRoot = path.resolve(__dirname);
 argv = require('minimist')(process.argv.slice(2));
 version = 'v1';
-baseurl = '/' + version + '/auth';
+baseUrl = '/' + version + '/auth';
 port = argv.port;
 
 
@@ -22,7 +22,8 @@ app.use(bodyParser.json());
 
 
 // routes
-app.get(baseurl + '/tinder', Auth.tinder);
+app.get(baseUrl + '/tinder', Auth.tinder);
+app.get(baseUrl + '/facebookId', Auth.faceBookId);
 app.listen(port);
 
 // error handler
