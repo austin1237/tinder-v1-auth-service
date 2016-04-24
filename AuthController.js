@@ -46,9 +46,32 @@ getTinderAuthToken = function(req, res, next){
   });
 };
 
+getfaceBookId = (function(req, res, next){
+  email = req.body.email;
+  password = req.body.password;
+  command = 'casperjs ' + global.appRoot;
+  command += '/casperScripts/getFacebookId.js ';
+  command += '--email=' + email + ' ';
+  command +='--password=' + password + ' ';
+  child = exec(command, function (error, stdout, stderr){
+  if (error) {
+    return next(error);
+  }
+  console.log('stdout is', stdout);
+  req.payload = stdout;
+  return next();
+  });
+});
+
 
 exports.tinder = [
   validateFacebookLoginInfo,
   getTinderAuthToken,
   returnResponse
+];
+
+exports.faceBookId = [
+ validateFacebookLoginInfo,
+ getfaceBookId,
+ returnResponse
 ];
